@@ -57,8 +57,27 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
+<!-- the script is what I completed: -->
 <script>
+  document.addEventListener('keydown', (e) => {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); // grab an audio element with attribute data-key= the events keyCode attribute
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);  // grab anything with class=key and with attribute data-key= the events keyCode attribute
+    if (!audio || !key) {
+      console.log('key not recognized');
+      return;
+    } 
+    key.classList.add('playing'); // changes style
+    audio.currentTime = 0; // resets audio file to start at time = 0
+    audio.play(); // plays audio file
+  });
 
+  // remove 'playing' class on each key div when CSS transition is over
+  let keys = document.querySelectorAll('.key'); // returns an array.  document.getelementsbyclassname does NOT return an array...
+  keys.forEach(key => {
+    key.addEventListener('transitionend', () => {
+      key.classList.remove('playing');
+    });
+  });
 </script>
 
 

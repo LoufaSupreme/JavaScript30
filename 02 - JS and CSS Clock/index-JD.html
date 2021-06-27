@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+
+  <style>
+    html {
+      background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      /* background: black; */
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      /* background: black; */
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); /* account for the height of the clock hands */
+    }
+
+    .hand {
+      width: 50%;
+      height: 6px;
+      background: black;
+      position: absolute;
+      top: 50%;
+      transform-origin: 100%; /* this is key to get hands to rotate around the end of the line instead of center */
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.42, 0, 0.53, 1.82);  /* made via chrome dev tools */
+    }
+
+    .hour-hand {
+      width: 30%;
+      transition: all 0.5s;
+    }
+
+    .min-hand {
+      width: 40%;
+      transition: all 0.2s;
+    }
+
+  </style>
+
+  <script>
+    const hour = document.querySelector('.hour-hand');
+    const min = document.querySelector('.min-hand');
+    const sec = document.querySelector('.second-hand');
+
+    function setTime() {
+      let date = new Date();
+      let hrsToday = date.getHours();
+      let minsToday = date.getMinutes();
+      let secsToday = date.getSeconds();
+
+      let secAngle = 90 + (secsToday-1)*360/60; 
+      secAngle += 360/60;
+      sec.style.transform = `rotate(${secAngle}deg)`;
+      // console.log(secsToday, secAngle);
+
+      let minAngle = 90 + (minsToday-1) * 360/60;
+      minAngle += 360/60;
+      min.style.transform = `translateX(25%) rotate(${minAngle}deg)`;
+
+      let hrAngle = 90 + (hrsToday-1) * 360/12;
+      hrAngle += 360/12;
+      hour.style.transform = `translateX(70%) rotate(${hrAngle}deg)`;
+    }
+
+    window.setInterval(setTime,1000); // don't include parentheses for function here!
+
+  </script>
+</body>
+</html>
