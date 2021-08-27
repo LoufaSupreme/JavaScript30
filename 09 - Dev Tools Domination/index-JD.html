@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    const p = document.querySelector('p');
+    function makeGreen() {
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log('your momma got that gawk gawk 9000')
+
+    // Interpolated
+    console.log(`Woof says the ${dogs[1].name} doggeh`);
+
+    // Styled
+    console.log('%c I got that wet and gushy', 'font-size: 25px; background: green')
+
+    // warning!
+    console.warn('oh shit shake that ass');
+
+    // Error :|
+    console.error('drop it like a nympho');
+
+    // Info
+    console.info('she got that good good');
+    
+    // Testing
+    console.assert(p.classList.contains('pu$$y'), 'Aint no pu$$y');
+
+    // clearing
+    // console.clear();
+
+    // Viewing DOM Elements
+    console.dir(p);
+
+    // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`${dog.name} is a bitch`);
+      console.log(`and zayamn ${dog.name} is ${dog.age*7} dog yrs old dawg!`);
+      console.groupEnd(`${dog.name}`);
+    });
+
+    // counting
+    console.count('get phat pu$$y');
+    console.count('get phat pu$$y');
+    console.count('get phat pu$$y');
+    console.count('get phat pu$$y');
+    console.count('get phat pu$$y');
+
+    // timing
+    console.time('check the timez');
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`${dog.name} is a bitch`);
+      console.log(`and zayamn ${dog.name} is ${dog.age*7} dog yrs old dawg!`);
+      console.groupEnd(`${dog.name}`);
+    });
+    console.timeEnd('check the timez');
+
+  </script>
+</body>
+</html>
