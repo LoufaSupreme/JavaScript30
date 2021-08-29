@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+  const konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+  let sequence1 = [];
+  const secretCode = 'bignips';
+  let sequence2 = [];
+
+  function captureKey(e) {
+    sequence1.push(e.keyCode);
+    sequence2.push(e.key);
+  
+    // check for Konami code
+    if (sequence1.length > konami.length) {
+      sequence1.splice(0,1);
+    }
+    if (compareArrays(sequence1, konami)) {
+      console.log("OH FUCK");
+    }
+
+    // check for custom secretCode
+    if (sequence2.length > secretCode.length) {
+      sequence2.splice(0,1);
+    }    
+    if (sequence2.join('') === secretCode) {
+      console.log('dope titties');
+      cornify_add(); // adds a unicorn from inbedded cornify site (see script tag above)
+    }
+  }
+
+  // you need a full function in JS to compare if an array is equal. 
+  function compareArrays(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length != b.length) return false;
+
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
+  }
+
+  document.addEventListener('keydown', captureKey);
+
+</script>
+</body>
+</html>
