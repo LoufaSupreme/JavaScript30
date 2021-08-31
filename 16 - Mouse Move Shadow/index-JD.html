@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mouse Shadow</title>
+</head>
+<body>
+
+  <div class="hero">
+    <h1 contenteditable>🔥WOAH!</h1>
+  </div>
+
+  <style>
+  html {
+    color: black;
+    font-family: sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+  }
+
+  h1 {
+    text-shadow: 10px 10px 0 rgba(0,0,0,1);
+    font-size: 100px;
+  }
+  </style>
+
+<script>
+
+  const hero = document.querySelector('.hero');
+  const text = hero.querySelector('h1');
+  const maxShadowDepth = 100; // at most, shadow will extend 100px;
+
+  function shadow(e) {
+    const width = hero.offsetWidth;
+    const height = hero.offsetHeight;
+    let x = e.offsetX;
+    let y = e.offsetY;
+
+    // if the mousemove event is triggering on something other than the hero element
+    // i.e. a child div, then the x,y will be relative to that element.  So
+    // we need to add the offset positions of that element to the x, y:
+    if (this !== e.target) { 
+      x = x + e.target.offsetLeft;
+      y = y + e.target.offsetTop;
+    }
+    // set the shadow depth to be proportional to the dist from mouse to center to hero element
+    const xShadowDepth = Math.round((x - width/2) / width/2 * maxShadowDepth);
+    const yShadowDepth = Math.round((y - height/2) / height/2 * maxShadowDepth);
+
+    text.style.textShadow = `${xShadowDepth}px ${yShadowDepth}px 0 red`;
+  }
+
+  hero.addEventListener('mousemove', shadow);
+
+</script>
+</body>
+</html>
