@@ -10,7 +10,12 @@
   <div class="photobooth">
     <div class="controls">
       <button onClick="takePhoto()">Take Photo</button>
-      <div class="rgb">
+      <button onClick="changeFilter(null)">Reset</button>
+      <button onClick="changeFilter('red')">Red Filter</button>
+      <button onClick="changeFilter('rgbSplit')">RGB Split</button>
+      <button onClick="changeFilter('blur')">Blur</button>
+      <button onClick="changeFilter('greenScreen')">Green Screen</button>
+      <div class="rgb" style="display: none">
         <label for="rmin">Red Min:</label>
         <input type="range" min=0 max=255 name="rmin">
         <label for="rmax">Red Max:</label>
