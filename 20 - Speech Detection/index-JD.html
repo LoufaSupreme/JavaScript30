@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Speech Detection</title>
+</head>
+<body>
+
+  <div class="words" contenteditable>
+  </div>
+
+<script>
+  // not supported in Firefox
+  window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;  // webkit for chrome
+
+  if (!window.SpeechRecognition) {
+    alert("Sorry. This browser doesn't support speech recongition.");
+  } else {
+    console.log('Speech Recognition Supported');
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.interimResults = true;  // gives a live update of the speech. Without this you won't get results until you stop speaking.
+  
+  // create a new paragraph to be added to the DOM everytime we stop speaking
+  let p = document.createElement('p');
+  const words = document.querySelector('.words');
+  words.appendChild(p);
+
+  recognition.addEventListener('result', e => {
+    // console.log(e);
+    // e.results is the "list" of estimated words.  Convert to array and map to just the words:
+    const transcript = Array.from(e.results)
+      .map(result => result[0])
+      .map(result => result.transcript)
+      .join('');
+    // console.log(transcript);
+
+    // write transcript to page:
+    // p.textContent = transcript;
+
+    // replace all gross words with emoji
+    const poopScript = transcript.replace(/poop|poo|shit|dump/gi, '💩');
+    p.textContent = poopScript;
+
+    // check if user says unicorn...
+    if (transcript.includes('unicorn') && (e.results[0].isFinal)) {
+      alert('Unicorn Party!! 🦄🦄🦄🦄🦄') 
+    }
+
+    // if we stop talking and the transcript finishes (isFinal = true), then make a new paragraph:
+    if (e.results[0].isFinal) {
+      p = document.createElement('p');
+      words.appendChild(p);
+    }
+  })
+
+  // restart the speech recoqnition everytime it stops (i.e. everytime we stop speaking):
+  recognition.addEventListener('end', recognition.start);
+
+  // start speech recognition initially:
+  recognition.start();
+
+</script>
+
+
+  <style>
+    html {
+      font-size: 10px;
+    }
+
+    body {
+      background: #ffc600;
+      font-family: 'helvetica neue';
+      font-weight: 200;
+      font-size: 20px;
+    }
+
+    .words {
+      max-width: 500px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 5px;
+      box-shadow: 10px 10px 0 rgba(0,0,0,0.1);
+      padding: 1rem 2rem 1rem 5rem;
+      background: -webkit-gradient(linear, 0 0, 0 100%, from(#d9eaf3), color-stop(4%, #fff)) 0 4px;
+      background-size: 100% 3rem;
+      position: relative;
+      line-height: 3rem;
+    }
+    
+    p {
+      margin: 0 0 3rem;
+    }
+
+    .words:before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      top: 0;
+      left: 30px;
+      bottom: 0;
+      border: 1px solid;
+      border-color: transparent #efe4e4;
+    }
+  </style>
+
+</body>
+</html>
