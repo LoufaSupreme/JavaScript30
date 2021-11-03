@@ -27,6 +27,24 @@
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+<<<<<<< HEAD
+=======
+    
+    const triggers = document.querySelectorAll('a');
+    const highlight = document.createElement('span');
+    highlight.classList.add('highlight');
+    document.body.append(highlight);
+
+    function highlightLink() {
+      const specs = this.getBoundingClientRect();
+      highlight.style.width = `${specs.width}px`;
+      highlight.style.height = `${specs.height}px`;
+      highlight.style.transform = `translate(${specs.left + window.scrollX}px, ${specs.top + window.scrollY}px)`;
+    }
+
+    triggers.forEach(link => link.addEventListener('mouseover', highlightLink));
+
+>>>>>>> 88516ebdad723c29e9adb820e92286254d19b378
   </script>
 </body>
 </html>
