@@ -60,7 +60,7 @@
 
   function fixNav() {
     if (topOfNav <= window.scrollY) {
-      document.body.style.paddingTop = nav.offsetHeight + 'px'; //need to do this b/c setting nav position = fixed means it floats above all content and doesn't take up any space anymore, meaning all the content will jump up. 
+      document.body.style.paddingTop = nav.offsetHeight + 'px'; //need to do this b/c setting nav position = fixed means it floats above all content and doesn't take up any space anymore, meaning all the content will jump up. This padding will replace the space the nav previously took up. 
       document.body.classList.add('fixed-nav'); // add this to the body so we can CSS target multiple items at the same time (i.e. the logo)
     } 
     else {

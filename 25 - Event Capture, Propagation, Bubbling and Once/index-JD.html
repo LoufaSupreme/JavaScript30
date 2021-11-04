@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+</head>
+<body class="bod">
+
+  <div class="one ass">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+
+<style>
+  html {
+    box-sizing: border-box;
+  }
+  
+  *, *:before, *:after { 
+    box-sizing: inherit; 
+  }
+
+  div {
+    width: 100%;
+    padding: 100px;
+  }
+
+  .one {
+    background: thistle;
+  }
+
+  .two {
+    background: mistyrose;
+  }
+
+  .three {
+    background: coral;
+  }
+</style>
+
+<button>BUTTON</button>
+<script>
+  const divs = document.querySelectorAll('div');
+  const btn = document.querySelector('button');
+
+  function logText(e) {
+    console.log(this.classList.value);
+    // stop propagation stops the bubbling of the event chain, so only the first item in the event chain is recognized.  If capture is set to false in the eventListener below, that means it stops at the first item (three).  If it's set to true then it will be only the last item (one).
+    e.stopPropagation();
+  }
+
+  // {capture: true} is an optional parameter that reverses the propogration of events.  False is default, so if you click on the middle div (.three) the propagation chain will be three, two, one (it bubbles from the start to the end).  If it's set to true, then the propagation chain is reversed and will be one, two, three. 
+  divs.forEach(div => div.addEventListener('click', logText,{
+    capture: false
+  }));
+
+  // the once: true optional parameter means the event can only be triggered once, even if clicked multiple times.
+  btn.addEventListener('click', () => {
+    console.log('CLICK!!!!!');
+  }, {
+    once: true
+  });
+
+</script>
+</body>
+</html>
